@@ -3,11 +3,15 @@ const model = handPoseDetection.SupportedModels.MediaPipeHands;
     
     const detectorConfig = {
     runtime: 'tfjs',
-    modelType: 'full'
+    modelType: 'lite'
+    
+
     };
     detector = await handPoseDetection.createDetector(model, detectorConfig);
     const estimationConfig = {flipHorizontal: false};
-    img.crossOrgin='Anonymous';
+    
     const hands = await detector.estimateHands(img, estimationConfig);
+    console.log(hands)
+    console.log("scrip ended")
 }
 main();
