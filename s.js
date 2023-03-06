@@ -11,17 +11,20 @@ async function x1() {
   const sound= document.getElementById("img5");
   const add= document.getElementById("img6");
   const minus= document.getElementById("img7");
+   const addfile= document.getElementById("img9");
+  var inp = document.getElementById("get-files");
   let vp=1;
-  
+ 
+
   
   const model = await handpose.load();
    let delay=100;
    var hx=0;
    var hy=0;
-    
+   
     context.fill();
-    if (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia) {
-              navigator.mediaDevices.getUserMedia({ video:{width:350,height:250,},
+   if (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video:{width:350,height:250,},
                     audio:false })
                 .then(function (stream) {
                   video.srcObject = stream;
@@ -32,8 +35,8 @@ async function x1() {
                   console.log("Something went wrong!");
                 });
             }
-            let vidsc=['v2.mp4','a.mp4',"vid3.mp4","vid4.mp4"];
-                
+            
+        vid1.src=vidsc[0];         
             
     async function draw(){
   
@@ -43,6 +46,7 @@ async function x1() {
         context.drawImage(sound,(9*canvas.width/10)-canvas.width/10,9*canvas.height/10,10,15);
         context.drawImage(add,(9*canvas.width/10),9*canvas.height/10,10,15);
         context.drawImage(minus,(9*canvas.width/10)-canvas.width/5,9*canvas.height/10,10,15);
+        context.drawImage(addfile,(3*canvas.width/10),9*canvas.height/10,10,15);
         const predictions = await model.estimateHands(video,{
           flipHorizontal: false,
          
@@ -58,9 +62,9 @@ async function x1() {
            
       
     
-        hx = 30+canvas.width-(prediction.landmarks[0][0]+prediction.landmarks[17][0])/2;
+        hx = 15+canvas.width-(prediction.landmarks[0][0]+prediction.landmarks[17][0])/2;
       
-        hy =-50+(prediction.landmarks[0][1]+prediction.landmarks[9][1])/2;
+        hy =-40+(prediction.landmarks[0][1]+prediction.landmarks[9][1])/2;
         context.drawImage(imghop,hx,hy,15,10);
        
         
@@ -68,6 +72,7 @@ async function x1() {
         context.drawImage(imghcl,hx,hy,15,10);
 
           if(addc(hx,hy,canvas)==true){console.log("plus sound"); if(vid1.volume<1) vid1.volume=vid1.volume+.2;  delay();}
+          if(addfilec(hx,hy,canvas)==true){console.log("addfile"); window.location="login.html" }
           if(minusc(hx,hy,canvas)==true){console.log("minus");  if(vid1.volume>.3){ vid1.volume=vid1.volume-.2; console.log(vid1.volume); delay();}}
           if(forwc(hx,hy,canvas)==true){console.log("forw"); vp=(vp+1) % vidsc.length; vid1.src=vidsc[vp]; vid1.play(); delay();}
           if(backc(hx,hy,canvas)==true){console.log("back");vp=(vp-1) % vidsc.length; vp=Math.sqrt(vp*vp); vid1.src=vidsc[vp]; vid1.play(); delay();}
@@ -172,5 +177,11 @@ const backc=(x,y,canvas)=>{
         {return  true;}
         else {return false;}
         };
-
+    const addfilec=(x,y,canvas)=>{
+        x=x-(3*canvas.width/10);
+        y=y-9*canvas.height/10;
+        if(( -10< x) && (x < 10) && (-10 < y) && (y < 10))
+        {return  true;}
+        else {return false;}
+        };
        
