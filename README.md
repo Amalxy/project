@@ -9,3 +9,4 @@ This is developed using Tensorflow js library this enables to image recognisatio
 s.js file
 
 demo - https://handflix.000webhostapp.com/
+it may take 5 min to laod 
